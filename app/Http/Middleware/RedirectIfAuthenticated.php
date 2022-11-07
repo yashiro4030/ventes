@@ -24,6 +24,15 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 return redirect(RouteServiceProvider::HOME);
+
+                //code for redirect both admin and front 
+                if ($request->is('admin') || $request->is('admin/*')) {
+                    //redirect to backend
+                    return redirect(RouteServiceProvider::ADMIN);
+                } else {
+                    //redirect to frontend (le lien temp pour user simple)
+                    return redirect(RouteServiceProvider::HOME);
+                }
             }
         }
 
